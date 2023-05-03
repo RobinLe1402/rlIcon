@@ -3,6 +3,7 @@
 // Win32
 #define WIN32_MEAN_AND_LEAN
 #include <Windows.h>
+#include <VersionHelpers.h>
 
 
 namespace rlIcon
@@ -41,11 +42,12 @@ namespace rlIcon
 	Icon::Icon(const Icon &other)
 	{
 		m_oSubImages = other.m_oSubImages;
-
 		for (auto &o : m_oSubImages)
 		{
 			o.hIcon = CopyIcon(o.hIcon);
 		}
+
+		m_oSquareIcons = other.m_oSquareIcons;
 	}
 
 	Icon::~Icon() { clear(); }
@@ -55,11 +57,16 @@ namespace rlIcon
 		if (this == &other)
 			return *this;
 
+
 		m_oSubImages = other.m_oSubImages;
 		for (auto &o : m_oSubImages)
 		{
 			o.hIcon = CopyIcon(o.hIcon);
 		}
+
+		m_oSquareIcons = other.m_oSquareIcons;
+
+
 		return *this;
 	}
 	
@@ -141,6 +148,20 @@ namespace rlIcon
 			++pEntry;
 		}
 
+		// find square images of highest fidelity
+		for (size_t i = 0; i < m_oSubImages.size(); ++i)
+		{
+			const auto &o = m_oSubImages[i];
+
+			if (o.iWidth != o.iHeight)
+				continue; // no square
+
+			const auto it = m_oSquareIcons.find(o.iWidth);
+			if (it == m_oSquareIcons.end() ||
+				m_oSubImages[it->second].iBitsPerPixel < o.iBitsPerPixel)
+				m_oSquareIcons[o.iWidth] = i;
+		}
+
 		return true;
 	}
 
@@ -151,6 +172,57 @@ namespace rlIcon
 			DestroyIcon(o.hIcon);
 		}
 		m_oSubImages.clear();
+		m_oSquareIcons.clear();
+	}
+
+	HICON Icon::getSquareIcon(unsigned iMinSize) const
+	{
+		if (m_oSquareIcons.size() == 0)
+			return NULL; // no icons
+
+		// search for exact size
+		auto it = m_oSquareIcons.find(iMinSize);
+		if (it != m_oSquareIcons.end())
+			return m_oSubImages[it->second].hIcon;
+
+		// only smaller icons --> return largest one
+		if (m_oSquareIcons.rbegin()->first < iMinSize)
+			return m_oSubImages[m_oSquareIcons.rbegin()->second].hIcon;
+		
+		for (auto &it : m_oSquareIcons)
+		{
+			if (m_oSubImages[it.second].iWidth >= iMinSize)
+				return m_oSubImages[it.second].hIcon;
+		}
+
+
+		return NULL;
+	}
+
+	HICON Icon::getBigIcon(HWND hWnd) const
+	{
+		UINT iDPI;
+		if (hWnd != NULL)
+			iDPI = GetDpiForWindow(hWnd);
+		else
+			iDPI = GetDpiForSystem();
+
+		int iSize = GetSystemMetricsForDpi(SM_CXICON, iDPI);
+		if (IsWindows10OrGreater() && iSize == 32)
+			iSize = 24;
+
+		return getSquareIcon(iSize);
+	}
+
+	HICON Icon::getSmallIcon(HWND hWnd) const
+	{
+		UINT iDPI;
+		if (hWnd != NULL)
+			iDPI = GetDpiForWindow(hWnd);
+		else
+			iDPI = GetDpiForSystem();
+
+		return getSquareIcon(GetSystemMetricsForDpi(SM_CXICON, iDPI));
 	}
 
 }

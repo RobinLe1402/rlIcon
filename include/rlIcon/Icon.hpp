@@ -7,6 +7,7 @@
 
 
 // STL
+#include <map>
 #include <vector>
 
 // Win32
@@ -106,9 +107,48 @@ namespace rlIcon
 		void clear();
 
 
+
+		/// <summary>
+		/// Search for a square icon of at least <c>iMinSize</c>x<c>iMinSize</c> pixels.<para />
+		/// Returns a lower resolution <c>HICON</c> if no larger image is available.
+		/// </summary>
+		/// <param name="iMinSize">The minimum pixel size.</param>
+		/// <returns>
+		/// Handle to the icon with the closest resolution.<para />
+		/// If no square icon is found, <c>NULL</c> is returned.
+		/// </returns>
+		HICON getSquareIcon(unsigned iMinSize) const;
+
+
+		/// <summary>
+		/// Get the Win32 "big" icon (e.g. for taskbar).
+		/// </summary>
+		/// <param name="hWnd">
+		/// The target window, for advanced size information.<para />
+		/// Can be set to <c>NULL</c>.
+		/// </param>
+		/// <returns>
+		/// Either the handle to the appropriate icon or <c>NULL</c> if no square icon was found.
+		/// </returns>
+		HICON getBigIcon(HWND hWnd = NULL) const;
+
+		/// <summary>
+		/// Get the Win32 "small" icon (e.g. for titlebar).
+		/// </summary>
+		/// <param name="hWnd">
+		/// The target window, for advanced size information.<para />
+		/// Can be set to <c>NULL</c>.
+		/// </param>
+		/// <returns>
+		/// Either the handle to the appropriate icon or <c>NULL</c> if no square icon was found.
+		/// </returns>
+		HICON getSmallIcon(HWND hWnd = NULL) const;
+
+
 	private: // variables
 		
-		std::vector<SubImage> m_oSubImages;
+		std::vector<SubImage>      m_oSubImages;
+		std::map<unsigned, size_t> m_oSquareIcons;
 
 	};
 
