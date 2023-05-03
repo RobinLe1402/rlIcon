@@ -19,12 +19,23 @@
 namespace rlIcon
 {
 
+	/// <summary>
+	/// A multisize icon loaded from a resource.
+	/// </summary>
 	class Icon final
 	{
 	public: // types
 
+		/// <summary>
+		/// A single image that is part of a multi-size icon.
+		/// </summary>
 		struct SubImage
 		{
+			/// <summary>
+			/// A handle to the icon data.<para />
+			/// Only valid as long as the <c>HMODULE</c> parameter of the <c>loadFromResource</c>
+			/// function is valid.
+			/// </summary>
 			HICON hIcon;
 
 			unsigned iWidth;     // Width, in pixels, of the image.
@@ -40,12 +51,12 @@ namespace rlIcon
 
 	public: // methods
 
-		Icon() = default;
-		Icon(const Icon &) = default;
-		Icon(Icon &&) = default;
+		Icon()             = default;
+		Icon(Icon &&)      = default;
+		Icon(const Icon &other);
 		~Icon();
 
-		Icon &operator=(const Icon &) = default;
+		Icon &operator=(const Icon &other);
 		Icon &operator=(Icon &&) = default;
 
 		iterator begin() const { return m_oSubImages.begin(); }
@@ -55,12 +66,43 @@ namespace rlIcon
 
 
 
-		size_t subImageCount() const noexcept { return m_oSubImages.size(); }
+		/// <summary>
+		/// The count of images in the multisize icon.
+		/// </summary>
+		size_t count() const noexcept { return m_oSubImages.size(); }
+
+		/// <summary>
+		/// Get an image.
+		/// </summary>
 		const SubImage &operator[](size_t index) const { return m_oSubImages[index]; }
 
 
 
+		/// <summary>
+		/// Try to load a multisize icon from an icon resource.
+		/// </summary>
+		/// <param name="hModule">
+		/// The module of the icon to load the icon from.<para />
+		/// Cannot be <c>NULL</c>.<para />
+		/// Must be valid as long as the <c>HICON</c> values are used.
+		/// </param>
+		/// <param name="iID">
+		/// The ID of the icon to load.<para />
+		/// Don't use any of the predefined <c>IDI_</c> values and
+		/// don't apply the <c>MAKEINTRESOURCE</c> macro.
+		/// </param>
+		/// <returns>
+		/// Could icon data be read? <para />
+		/// Returns <c>TRUE</c> as soon as the data structure is valid,
+		/// even if no icons have been loaded.
+		/// </returns>
 		bool loadFromResource(HMODULE hModule, WORD iID);
+
+		/// <summary>
+		/// Clear all data linked to this icon.<para />
+		/// All the <c>HICON</c> values obtained from this object become invalid when calling this
+		/// function.
+		/// </summary>
 		void clear();
 
 

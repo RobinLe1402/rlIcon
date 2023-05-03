@@ -38,11 +38,37 @@ namespace rlIcon
 
 	
 
+	Icon::Icon(const Icon &other)
+	{
+		m_oSubImages = other.m_oSubImages;
+
+		for (auto &o : m_oSubImages)
+		{
+			o.hIcon = CopyIcon(o.hIcon);
+		}
+	}
+
 	Icon::~Icon() { clear(); }
+
+	Icon &Icon::operator=(const Icon &other)
+	{
+		if (this == &other)
+			return *this;
+
+		m_oSubImages = other.m_oSubImages;
+		for (auto &o : m_oSubImages)
+		{
+			o.hIcon = CopyIcon(o.hIcon);
+		}
+		return *this;
+	}
 	
 	bool Icon::loadFromResource(HMODULE hModule, WORD iID)
 	{
-		clear();
+		clear(); // delete previously loaded images
+
+		if (hModule == NULL)
+			return false;
 
 		HRSRC hRSRC = FindResource(hModule, MAKEINTRESOURCE(iID), RT_GROUP_ICON);
 		if (hRSRC == NULL)

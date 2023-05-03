@@ -5,13 +5,17 @@
 int main(int argc, char* argv[])
 {
 	rlIcon::Icon oIcon;
-	if (!oIcon.loadFromResource(GetModuleHandle(NULL), IDI_RLCONSOLE))
+
+	const HMODULE hMod = GetModuleHandle(NULL);
+	const WORD    wID  = IDI_RLCONSOLE;
+
+	if (!oIcon.loadFromResource(hMod, wID))
 	{
 		std::printf("Failed to load icons.\n");
 		return 1;
 	}
-	std::printf("Successfully loaded %llu icons.\n", oIcon.subImageCount());
-	for (size_t i = 0; i < oIcon.subImageCount(); ++i)
+	std::printf("Successfully loaded %llu icons.\n", oIcon.count());
+	for (size_t i = 0; i < oIcon.count(); ++i)
 	{
 		auto &o = oIcon[i];
 		std::printf(
