@@ -63,9 +63,6 @@ namespace rlIcon
 		GRPICONDIRENTRY *pEntry = &pDir->idEntries;
 		for (size_t i = 0; i < pDir->idCount; ++i)
 		{
-			// TODO:
-			// https://stackoverflow.com/questions/20729156/find-out-number-of-icons-in-an-icon-resource-using-win32-api
-			// https://devblogs.microsoft.com/oldnewthing/20120720-00/?p=7083
 			SubImage si =
 			{
 				.hIcon         = NULL,
