@@ -27,8 +27,8 @@ namespace rlIcon
 		{
 			HICON hIcon;
 
-			BYTE  iWidth;        // Width, in pixels, of the image.
-			BYTE  iHeight;       // Height, in pixels, of the image.
+			unsigned iWidth;     // Width, in pixels, of the image.
+			unsigned iHeight;    // Height, in pixels, of the image.
 			BYTE  iColorCount;   // Number of colors in image (0 if >= 8bpp).
 			WORD  iColorPlanes;  // Color Planes.
 			WORD  iBitsPerPixel; // Bits per pixel.

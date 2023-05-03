@@ -78,6 +78,20 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="test.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\rlConsole.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\rlIcon.vcxproj">
+      <Project>{89f2b9e2-3bd0-4ae2-880f-a2b5c4f7ab1e}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
