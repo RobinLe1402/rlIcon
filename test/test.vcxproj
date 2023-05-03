@@ -92,6 +92,9 @@
       <Project>{89f2b9e2-3bd0-4ae2-880f-a2b5c4f7ab1e}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="test.manifest" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
