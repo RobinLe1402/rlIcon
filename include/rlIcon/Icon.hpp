@@ -11,8 +11,10 @@
 #include <vector>
 
 // Win32
+#define NOMINMAX
 #define WIN32_MEAN_AND_LEAN
 #include <Windows.h>
+#undef NOMINMAX
 #undef WIN32_MEAN_AND_LEAN
 
 
