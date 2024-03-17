@@ -89,17 +89,15 @@ namespace rlIcon
 		/// Cannot be <c>NULL</c>.<para />
 		/// Must be valid as long as the <c>HICON</c> values are used.
 		/// </param>
-		/// <param name="iID">
-		/// The ID of the icon to load.<para />
-		/// Don't use any of the predefined <c>IDI_</c> values and
-		/// don't apply the <c>MAKEINTRESOURCE</c> macro.
+		/// <param name="lpIconName">
+		/// The name of the icon to load.
 		/// </param>
 		/// <returns>
 		/// Could icon data be read? <para />
 		/// Returns <c>TRUE</c> as soon as the data structure is valid,
 		/// even if no icons have been loaded.
 		/// </returns>
-		bool loadFromResource(HMODULE hModule, WORD iID);
+		bool loadFromResource(HMODULE hModule, LPCWSTR lpIconName);
 
 		/// <summary>
 		/// Clear all data linked to this icon.<para />

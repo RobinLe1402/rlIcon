@@ -70,14 +70,14 @@ namespace rlIcon
 		return *this;
 	}
 	
-	bool Icon::loadFromResource(HMODULE hModule, WORD iID)
+	bool Icon::loadFromResource(HMODULE hModule, LPCWSTR lpIconName)
 	{
 		clear(); // delete previously loaded images
 
 		if (hModule == NULL)
 			return false;
 
-		HRSRC hRSRC = FindResource(hModule, MAKEINTRESOURCE(iID), RT_GROUP_ICON);
+		HRSRC hRSRC = FindResourceW(hModule, lpIconName, RT_GROUP_ICON);
 		if (hRSRC == NULL)
 			return false;
 

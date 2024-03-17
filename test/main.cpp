@@ -6,10 +6,7 @@ int main(int argc, char* argv[])
 {
 	rlIcon::Icon oIcon;
 
-	const HMODULE hMod = GetModuleHandle(NULL);
-	const WORD    wID  = IDI_RLCONSOLE;
-
-	if (!oIcon.loadFromResource(hMod, wID))
+	if (!oIcon.loadFromResource(GetModuleHandle(NULL), MAKEINTRESOURCEW(IDI_RLCONSOLE)))
 	{
 		std::printf("Failed to load icons.\n");
 		return 1;
