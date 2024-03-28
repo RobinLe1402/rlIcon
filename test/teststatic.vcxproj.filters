@@ -25,7 +25,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="test.rc">
+    <ResourceCompile Include="teststatic.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -35,6 +35,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Manifest Include="test.manifest" />
+    <Manifest Include="teststatic.manifest" />
   </ItemGroup>
 </Project>

@@ -38,11 +38,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\PropertySheet.StaticLib.Test.props" />
+    <Import Project="..\cppenv\vs\lib-static-test.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\PropertySheet.StaticLib.Test.props" />
+    <Import Project="..\cppenv\vs\lib-static-test.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -82,18 +82,18 @@
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="test.rc" />
+    <ResourceCompile Include="teststatic.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\rlConsole.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\rlIcon.vcxproj">
+    <ProjectReference Include="..\src\static.vcxproj">
       <Project>{89f2b9e2-3bd0-4ae2-880f-a2b5c4f7ab1e}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Manifest Include="test.manifest" />
+    <Manifest Include="teststatic.manifest" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
